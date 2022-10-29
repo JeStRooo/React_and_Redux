@@ -1,0 +1,14 @@
+.post {
+    display: flex;
+    width: 800px;
+    justify-content: space-between;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #E53E3E, #D69E2E);
+    border-image-slice: 1;
+    padding: .5rem 1rem;
+}
+.postBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

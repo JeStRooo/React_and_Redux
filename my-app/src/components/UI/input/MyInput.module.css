@@ -1,0 +1,7 @@
+.myInput {
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #E53E3E, #D69E2E);
+    border-image-slice: 1;
+    padding: 8px 15px;
+    width: 100%;
+}

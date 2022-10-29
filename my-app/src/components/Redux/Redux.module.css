@@ -1,0 +1,30 @@
+.wrapper {
+    margin: 0 auto;
+}
+.buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.counter {
+    text-align: center;
+    font-size: 3rem;
+    padding: 2rem;
+}
+.customers {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+.customer {
+    display: flex;
+    min-width: 600px;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #E53E3E, #D69E2E);
+    border-image-slice: 1;
+    padding: .9rem 1.5rem .9rem 1rem;
+}

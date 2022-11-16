@@ -15,9 +15,7 @@
     gap: 1rem;
 }
 .post {
-    min-width: 790px;
-    border: 2px solid transparent;
-    border-image: linear-gradient(to right, #E53E3E, #D69E2E);
-    border-image-slice: 1;
-    padding: .9rem 1.5rem .9rem 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 }

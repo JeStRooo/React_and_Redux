@@ -8,10 +8,11 @@ const Header = () => {
             <div className={style.wrapper}>
                 <div className={style.navigation}>
                     <ul className={style.menu}>
-                        <Link to="/todo">toDo</Link>
+                        <Link to="/posts">Posts</Link>
                         <Link to="/list">List</Link>
                         <Link to="/svg">SVG</Link>
                         <Link to="/redux">Redux</Link>
+                        <Link to="/todo">ToDo</Link>
                     </ul>
                 </div>
             </div>

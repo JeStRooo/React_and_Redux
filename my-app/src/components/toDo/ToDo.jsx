@@ -1,76 +1,52 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useState} from 'react';
+import {Actions} from "../actions/Actions";
+import {useDispatch, useSelector} from "react-redux";
 import MyInput from "../UI/input/MyInput";
 import MyButton from "../UI/button/MyButton";
 import ToDoItem from "./ToDoItem";
 
 import styles from "./ToDo.module.css"
 
-const ToDo = (props) => {
-    const initialState = JSON.parse(localStorage.getItem('posts')) || []
-    const [posts, setPosts] = useState(initialState) // Не желательно писать логику в состоянии
-    const [title, setTitle] = useState('')
+const ToDo = () => {
     const [body, setBody] = useState('')
 
-    useEffect(() => {
-        localStorage.setItem('posts', JSON.stringify(posts))
-    }, [posts])
+    const dispatch = useDispatch()
+    const todos = useSelector(state => state.todos.todos)
 
-    const addApiPosts = (e) => {
-        e.preventDefault()
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(res => res.json())
-            .then(posts => setPosts(prevState => [...prevState, ...posts]))
-    }
-    // СДЕЛАТЬ РЕДАКТИРОВАНИЕ ПОСТОВ
-    const addNewPost = (e) => {
-        e.preventDefault()
-        setPosts([
-            ...posts, //
-            {
-                id: Date.now(),
-                title: title,
-                body: body,
-            }
-        ])
-        setTitle('')
+    const addNewTodo = () => {
+        const todo = {
+            body,
+            id: Date.now(),
+        }
         setBody('')
+        dispatch(Actions.addTodo(todo))
     }
-
-    // const deletePost = () => {
-    //     setPosts(posts.filter(el => el.id !== post.id))
-    // }
-
-    // const changePost = (post) => {
-    //     setPosts(posts.filter(el => el.target.value))
-    // }
 
     return (
         <section className={styles.wrapper}>
-            <form className={styles.form}>
-                {/*Управляемый компонент*/}
-                <MyInput
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                    type="text"
-                    placeholder="Название поста"
-                />
+            <div className={styles.form}>
                 <MyInput
                     value={body}
                     onChange={e => setBody(e.target.value)}
                     type="text"
-                    placeholder="Автор"
+                    placeholder="Задача на сегодня"
                 />
-                <MyButton onClick={addNewPost}>Создать пост</MyButton>
-                <MyButton onClick={addApiPosts}>Загрузить посты с API</MyButton>
-            </form>
-            <div className={styles.posts}>
-                {posts.map((post, index) =>
-                    <div className={styles.post}> {/*если больше одного, то ставим div*/}
-                        <ToDoItem setPosts={setPosts} number={index + 1} post={post} key={post.id}/>
-                        {/*<MyButton onClick={() => deletePost(post)}>Удалить пост</MyButton>*/}
-                        {/*<MyButton onClick={() => changePost(post)}>Изменить пост</MyButton>*/}
+                <MyButton onClick={() => addNewTodo(todos)}>Создать пост</MyButton>
+            </div>
+            <div>
+                {todos.length ?
+                    <div className={styles.posts}>
+                        {todos.map((todo, index) =>
+                            <div className={styles.post}>
+                                <ToDoItem todos={todos} todo={todo} number={index+1} key={todo.id}/>
+                            </div>
+                        )}
                     </div>
-                )}
+                    :
+                    <div style={{fontSize: '2rem', marginTop:20, textAlign: 'center'}}>
+                        Список задач отсутствует!
+                    </div>
+                }
             </div>
         </section>
     );

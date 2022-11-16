@@ -1,9 +1,9 @@
-import {createStore, combineReducers, applyMiddleware} from "redux";
+import {createStore, combineReducers} from "redux";
 import {cashReducer} from './cashReducer'
 import {customerReducer} from './customersReducer'
-import {composeWithDevTools} from "redux-devtools-extension";
-import thunk from 'redux-thunk';
-
+import {todosReducer} from "./todosReducer";
+import {applyMiddleware} from "redux";
+import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({ // Объединяем наши редьюсеры
     // позволяет вместо того, чтобы создавать один огромный reducer для всего состояния
@@ -11,7 +11,8 @@ const rootReducer = combineReducers({ // Объединяем наши редь�
     cash: cashReducer, // Разбили на модуль с cashReducer и customReducer(теперь наши редьюсеры
     // называются cash и customers
     customers: customerReducer,
+    todos: todosReducer
 })
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk))) // Первым
-// значением добавляем наши редьюсеры, вторым значением - меню разработчика
+export const store = createStore(rootReducer, applyMiddleware(thunk)) // Первым
+// значением добавляем наши редьюсеры

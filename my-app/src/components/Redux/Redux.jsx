@@ -2,7 +2,7 @@ import React from 'react';
 import styles from "./Redux.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import MyButton from "../UI/button/MyButton";
-import {addCustomerAction, removeCustomerAction} from "../store/customersReducer";
+import {addCustomerAction, removeCustomerAction} from "../reducers/customersReducer";
 import {fetchCustomers} from "../asyncActions/customers";
 
 const Redux = () => {
@@ -26,7 +26,7 @@ const Redux = () => {
         }
         dispatch(addCustomerAction(customer))
     }
-
+    console.log(customers)
     const removeCustomer = (customer) => {
         dispatch(removeCustomerAction(customer.id))
     }

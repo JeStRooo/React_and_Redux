@@ -2,8 +2,8 @@ import React from 'react';
 import styles from "./Redux.module.css";
 import {useDispatch, useSelector} from "react-redux";
 import MyButton from "../UI/button/MyButton";
-import {addCustomerAction, removeCustomerAction} from "../reducers/customersReducer";
-import {fetchCustomers} from "../asyncActions/customers";
+import {addCustomerAction, removeCustomerAction} from "../store/reducers/customersReducer";
+import {fetchCustomers} from "../store/asyncActions/customers";
 
 const Redux = () => {
 

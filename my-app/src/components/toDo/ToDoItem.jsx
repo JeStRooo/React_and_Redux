@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
-import {Actions} from "../actions/Actions";
+import {Actions} from "../store/actions/Actions";
 import styles from './ToDoItem.module.css';
 import trash from '../icons/trash-icon.svg';
 import edit from '../icons/edit-icon.svg'

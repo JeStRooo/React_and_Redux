@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Actions} from "../actions/Actions";
+import {Actions} from "../store/actions/Actions";
 import {useDispatch, useSelector} from "react-redux";
 import MyInput from "../UI/input/MyInput";
 import MyButton from "../UI/button/MyButton";

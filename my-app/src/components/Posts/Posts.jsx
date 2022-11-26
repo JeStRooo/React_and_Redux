@@ -1,72 +1,100 @@
 import React, {useEffect, useState} from 'react';
-import MyInput from "../UI/input/MyInput";
-import MyButton from "../UI/button/MyButton";
+import {useForm} from "react-hook-form";
 import PostItem from "./PostItem";
-
 import styles from "./Posts.module.css"
 
 const Posts = () => {
     const initialState = JSON.parse(localStorage.getItem('posts')) || []
     const [posts, setPosts] = useState(initialState) // Не желательно писать логику в состоянии
-    const [title, setTitle] = useState('')
-    const [body, setBody] = useState('')
 
     useEffect(() => {
         localStorage.setItem('posts', JSON.stringify(posts))
     }, [posts])
 
-    const addApiPosts = () => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(res => res.json())
-            .then(posts => setPosts(prevState => [...prevState, ...posts]))
-    }
+    // const addApiPosts = () => {
+    //     fetch('https://jsonplaceholder.typicode.com/posts')
+    //         .then(res => res.json())
+    //         .then(posts => setPosts(prevState => [...prevState, ...posts]))
+    // }
 
-    const addNewPost = () => {
+    // const addNewPost = () => {
+    //     setPosts([
+    //         ...posts,
+    //         {
+    //             id: Date.now(),
+    //             title: title,
+    //             body: body,
+    //         }
+    //     ])
+    //     setTitle('')
+    //     setBody('')
+    // }
+
+    const {register, handleSubmit, reset, formState: {errors, isValid}} = useForm({
+        mode: 'onBlur'
+    });
+    console.log(posts)
+    const onSubmit = (data) => {
         setPosts([
             ...posts,
             {
                 id: Date.now(),
-                title: title,
-                body: body,
+                post: data.post,
+                author: data.author
             }
         ])
-        setTitle('')
-        setBody('')
+        reset();
     }
-
-    // const deletePost = () => {
-    //     setPosts(posts.filter(el => el.id !== post.id))
-    // }
-
-    // const changePost = (post) => {
-    //     setPosts(posts.filter(el => el.target.value))
-    // }
 
     return (
         <section className={styles.wrapper}>
-            <div className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 {/*Управляемый компонент*/}
-                <MyInput
-                    value={title}
-                    onChange={e => setTitle(e.target.value)}
-                    type="text"
-                    placeholder="Название поста"
+                <input className={styles.form__input}
+                       {...register('post', {
+                           required: 'Поле не должно быть пустым!',
+                           minLength: {
+                               value: 2,
+                               message: 'Должно быть минимум 2 символа!'
+                           },
+                           pattern: {
+                               value: /^[0-9A-ZА-ЯЁ]+$/i,
+                               message: 'Вы ввели неправильные символы!'
+                           }
+                       })}
+                       type="text"
+                       placeholder="Название поста"
                 />
-                <MyInput
-                    value={body}
-                    onChange={e => setBody(e.target.value)}
-                    type="text"
-                    placeholder="Автор"
+                {errors?.post && <div style={{color: 'red'}}>{errors?.post?.message || 'Ошибка!'}</div>}
+                <input className={styles.form__input}
+                       {...register('author', {
+                           required: 'Поле не должно быть пустым!',
+                           minLength: {
+                               value: 2,
+                               message: 'Должно быть минимум 2 символа!'
+                           },
+                           maxLength: {
+                               value: 30,
+                               message: 'Имя автора должно быть не более 30 символов!'
+                           },
+                           pattern: {
+                               value: /^(?!.*\.\.)(?!\.)(?!.*\.$)(?!\d+$)[a-zA-Z0-9.]/,
+                               message: 'Неправильно ввели имя автора!'
+                           }
+                       })}
+                       type="text"
+                       placeholder="Автор"
                 />
-                <MyButton onClick={addNewPost}>Создать пост</MyButton>
-                <MyButton onClick={addApiPosts}>Загрузить посты с API</MyButton>
-            </div>
+                {errors?.author && <div style={{color: 'red'}}>{errors?.author?.message || 'Ошибка!'}</div>}
+                <input value="Создать пост" className={styles.form__button} type="submit" disabled={!isValid}/>
+                {/*<MyButton onClick={addNewPost}>Создать пост</MyButton>*/}
+                {/*<MyButton onClick={addApiPosts}>Загрузить посты с API</MyButton>*/}
+            </form>
+            {/*<MyButton onClick>Загрузить посты с API</MyButton>*/}
             <div className={styles.posts}>
                 {posts.map((post, index) =>
                     <div className={styles.post}> {/*если больше одного, то ставим div*/}
                         <PostItem setPosts={setPosts} number={index + 1} post={post} key={post.id}/>
-                        {/*<MyButton onClick={() => deletePost(post)}>Удалить пост</MyButton>*/}
-                        {/*<MyButton onClick={() => changePost(post)}>Изменить пост</MyButton>*/}
                     </div>
                 )}
             </div>

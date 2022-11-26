@@ -9,6 +9,31 @@
     flex-direction: column;
     margin-bottom: 2rem;
 }
+.form__input {
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #E53E3E, #D69E2E);
+    border-image-slice: 1;
+    padding: 8px 15px;
+    width: 100%;
+}
+.form__button {
+    max-width: 8rem;
+    padding: 5px 15px;
+    border: 2px solid transparent;
+    border-image: linear-gradient(to right, #E53E3E, #D69E2E);
+    border-image-slice: 1;
+    background: transparent;
+    color: black;
+    cursor: pointer;
+}
+.form__button:hover {
+    border-image: linear-gradient(to right, #D69E2E, #E53E3E);
+    border-image-slice: 1;
+    color: transparent;
+    background-clip: text;
+    background-image: linear-gradient(to right, #E53E3E, #D69E2E);
+    transition: .5s ease;
+}
 .posts {
     display: flex;
     flex-direction: column;

@@ -1,4 +1,4 @@
-.post {
+.posts {
     min-width: 790px;
     border: 2px solid transparent;
     border-image: linear-gradient(to right, #E53E3E, #D69E2E);
@@ -10,9 +10,6 @@
     justify-content: center;
     align-items: center;
 }
-.post__input__value {
-    max-width: 650px;
-}
 .post__value {
     display: flex;
     flex-direction: column;
@@ -20,18 +17,20 @@
 }
 .post__strong {
     display: flex;
+    align-items: center;
 }
 .post__input:read-only {
-    width: 100%;
+    width: 650px;
     border: none;
-    font-weight: bold;
+    box-sizing: border-box;
     box-shadow: none;
+    font-size: 1.25rem;
 }
 .post__input {
     border-color: #ff8700;
     box-shadow: 0 0 15px #ff8700;
 }
-.postContent {
+.post {
     display: flex;
     justify-content: space-between;
 }

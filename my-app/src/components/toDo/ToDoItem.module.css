@@ -6,14 +6,22 @@
 .todo {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .icons {
     display: flex;
     gap: .9rem;
 }
-.todoValue {
-    border: none;
+.todo__value {
+    border-color: #ff8700;
+    box-shadow: 0 0 15px #ff8700;
 }
-.todoIcon {
+.todo__value:read-only {
+    width: 650px;
+    border: none;
+    box-shadow: none;
+    font-size: 1.25rem;
+}
+.todo__icon {
     cursor: pointer;
 }

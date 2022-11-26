@@ -8,7 +8,7 @@ import edit from '../icons/edit-icon.svg'
 
 const ToDoItem = ({number, todo, todos, ...props}) => {
     const [isEditValue, setIsEditValue] = useState(false)
-    const [value, setValue] = useState(todo.body)
+    const [value, setValue] = useState(todo.title)
 
     const dispatch = useDispatch()
 
@@ -26,8 +26,7 @@ const ToDoItem = ({number, todo, todos, ...props}) => {
     return (
         <div className={styles.todos}>
             <div className={styles.todo}>
-                {number}.
-                <input className={styles.todoValue}
+                <input className={styles.todo__value}
                        readOnly={!isEditValue}
                        type="text"
                        value={String(value)}
@@ -35,13 +34,13 @@ const ToDoItem = ({number, todo, todos, ...props}) => {
                 />
             </div>
             <div className={styles.icons}>
-                <img className={styles.todoIcon}
+                <img className={styles.todo__icon}
                      title="Изменить"
                      onClick={changeTodo}
                      src={edit}
                      alt="edit"
                 />
-                <img className={styles.todoIcon}
+                <img className={styles.todo__icon}
                      title="Удалить"
                      onClick={()=>deleteTodo(todo.id)}
                      src={trash}

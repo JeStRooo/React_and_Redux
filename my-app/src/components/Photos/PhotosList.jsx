@@ -1,14 +1,14 @@
-import React, {useEffect} from 'react';
-import PostItem from "./PostItem";
+import React from 'react';
+import Photo from "./Photo";
 import {useState} from "react";
-import styles from "./PostList.module.css";
+import styles from "./PhotosList.module.css";
 import MyButton from "../UI/button/MyButton";
 
-const PostList = (props) => {
+const PhotosList = () => {
     const [posts, setPosts] = useState([])
     const addPosts = (e) => {
         e.preventDefault()
-        fetch('https://jsonplaceholder.typicode.com/posts')
+        fetch('https://jsonplaceholder.typicode.com/photos')
             .then(res => res.json())
             .then(data => setPosts(prevState => [...prevState, ...data]))
     }
@@ -32,10 +32,10 @@ const PostList = (props) => {
             </div>
             <div className={styles.posts}>
                 {posts.map(post =>
-                    <PostItem title='Список постов' post={post} key={post.id}/>
+                    <Photo title='Список постов' post={post} key={post.id}/>
                 )}
             </div>
         </main>
     );
 };
-export default PostList;
+export default PhotosList;

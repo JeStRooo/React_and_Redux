@@ -5,9 +5,10 @@ import edit from "../icons/edit-icon.svg"
 
 const PostItem = ({post, number, setPosts, ...props}) => { // Получаем через пропсы нужные данные
     const [isEditValue, setIsEditValue] = useState(false) // Флаг, для изменения поста
-    const [value, setValue] = useState(post.title) // Состояние, изменяющее значение нашего поста при нажатии на кнопку
+    const [value, setValue] = useState(post.post) // Состояние, изменяющее значение нашего поста при нажатии на кнопку
 
     const id = post.id
+
     const changePost = () => {
         setIsEditValue(!isEditValue)
         return setPosts(prev => prev.map(post => post.id !== id ? post : {...post, title: value}))
@@ -15,16 +16,12 @@ const PostItem = ({post, number, setPosts, ...props}) => { // Получаем �
     const deletePost = () => {
         return setPosts(prev => prev.filter(post => post.id !== id))
     }
+
     return (
-        <div>
-            <div className={styles.post}>
-                <div className={styles.postContent}>
-                    {/*<input type={"text"} readOnly={!isEdit} value={value} onChange={(e) => setValue(e.target.value)}/>*/}
-                    {/*<button onClick={() => editPost(props.post.id)}></button>*/}
-                    <div className={styles.post__input__value}>
+            <div className={styles.posts}>
+                <div className={styles.post}>
                         <div className={styles.post__value}>
                             <strong className={styles.post__strong}>
-                                {number}.
                                 <input className={styles.post__input}
                                        type={'text'}
                                        readOnly={!isEditValue}
@@ -32,9 +29,8 @@ const PostItem = ({post, number, setPosts, ...props}) => { // Получаем �
                                        onChange={e => setValue(e.target.value)}
                                 />
                             </strong>
-                            <div>{post.body}</div>
+                            <div>{post.author}</div>
                         </div>
-                    </div>
                     <div className={styles.post__buttons}>
                         <img className={styles.post_item__icon}
                              title={'Удалить пост'}
@@ -51,7 +47,6 @@ const PostItem = ({post, number, setPosts, ...props}) => { // Получаем �
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
 

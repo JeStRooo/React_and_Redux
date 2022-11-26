@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Actions} from "../store/actions/Actions";
 import {useDispatch, useSelector} from "react-redux";
 import MyInput from "../UI/input/MyInput";
@@ -8,30 +8,54 @@ import ToDoItem from "./ToDoItem";
 import styles from "./ToDo.module.css"
 
 const ToDo = () => {
-    const [body, setBody] = useState('')
+    const [title, setTitle] = useState('')
+    const [isFocus, setIsFocus] = useState(true)
+    const [isValid, setIsValid] = useState(false)
+
+    // useEffect(() => {
+    //     localStorage.setItem('todos', JSON.stringify(todos))
+    // }, [todos])
 
     const dispatch = useDispatch()
     const todos = useSelector(state => state.todos.todos)
+    
+    const messageError = 'Поле не должно быть пустым!'
+
+    useEffect(() => {
+        setIsValid(!!title.length)
+    }, [title])
 
     const addNewTodo = () => {
         const todo = {
-            body,
+            title,
             id: Date.now(),
         }
-        setBody('')
+        setTitle('')
+        setIsFocus(true)
+        setIsValid(false)
         dispatch(Actions.addTodo(todo))
+    }
+
+    const bodyHandler = (e) => {
+        setIsValid(!!e.target.value.length)
+        setTitle(e.target.value)
     }
 
     return (
         <section className={styles.wrapper}>
             <div className={styles.form}>
                 <MyInput
-                    value={body}
-                    onChange={e => setBody(e.target.value)}
+                    value={title}
+                    onBlur={() => setIsFocus(false)}
+                    name='body'
+                    onChange={e => bodyHandler(e)}
+                    onFocus={() => setIsFocus(true)}
                     type="text"
                     placeholder="Задача на сегодня"
                 />
-                <MyButton onClick={() => addNewTodo(todos)}>Создать пост</MyButton>
+                {(!isFocus && !isValid) && <div style={{color: "red"}}>{messageError}</div>}
+                <MyButton disabled={!isValid} onClick={() => addNewTodo(todos)}>Добавить задание</MyButton>
+                <MyButton onClick={() => dispatch(Actions.fetchTodo())}>Добавить задания с API</MyButton>
             </div>
             <div>
                 {todos.length ?

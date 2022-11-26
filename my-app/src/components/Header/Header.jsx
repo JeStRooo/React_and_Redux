@@ -9,7 +9,7 @@ const Header = () => {
                 <div className={style.navigation}>
                     <ul className={style.menu}>
                         <Link to="/posts">Posts</Link>
-                        <Link to="/list">List</Link>
+                        <Link to="/photos">Photos</Link>
                         <Link to="/svg">SVG</Link>
                         <Link to="/redux">Redux</Link>
                         <Link to="/todo">ToDo</Link>
